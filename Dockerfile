@@ -20,22 +20,23 @@
 
 
 #CMD exec python3 manage.py runserver 0.0.0.0:$PORT
-FROM gradle:6.7.0-jdk8 AS TEMP_BUILD_IMAGE
-ENV APP_HOME=/usr/app/
-WORKDIR $APP_HOME
+FROM gradle:6.8.0-jre11-openj9
+
+WORKDIR /usr/src/app/
+
+RUN pwd
+
 COPY . .
 
-USER root
 
-RUN gradle build --no-daemon
+RUN echo $(ls)
 RUN echo $(ls)
 
+RUN gradle build --no-daemon
 
-# actual container
-
-FROM adoptopenjdk/openjdk8:alpine
+RUN echo $(ls)
 
 #EXPOSE 8080
 #COPY ${JAR_FILE} app.jar
 #ENTRYPOINT ["java","-jar","/app1.jar"]
-RUN gradle run
+ENTRYPOINT ["java","-jar","build/libs/redis-caching-java-0.0.1-SNAPSHOT.jar"]
