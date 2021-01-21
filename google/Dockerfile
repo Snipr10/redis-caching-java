@@ -29,7 +29,6 @@ USER root
 
 RUN gradle build || return 0
 COPY . .
-RUN gradle clean build
 
 # actual container
 
