@@ -42,5 +42,5 @@ RUN echo $(ls)
 FROM adoptopenjdk/openjdk8:alpine
 
 EXPOSE 8080
-COPY ${JAR_FILE} app.war
-ENTRYPOINT ["java","-jar","/app.war"]
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
