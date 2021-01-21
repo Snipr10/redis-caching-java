@@ -39,4 +39,4 @@ ENV APP_HOME=/usr/app/
 WORKDIR $APP_HOME
 COPY . .
 
-ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
+ENTRYPOINT exec java -jar build/libs/redis-caching-java-0.0.1-SNAPSHOT.war
