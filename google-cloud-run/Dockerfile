@@ -28,7 +28,6 @@ COPY . .
 USER root
 
 RUN gradle build || return 0
-COPY . .
 
 # actual container
 
@@ -37,6 +36,5 @@ ENV ARTIFACT_NAME=redis-caching-java-0.0.1-SNAPSHOT.war
 ENV APP_HOME=/usr/app/
 
 WORKDIR $APP_HOME
-COPY . .
 
 ENTRYPOINT exec java -jar build/libs/redis-caching-java-0.0.1-SNAPSHOT.war

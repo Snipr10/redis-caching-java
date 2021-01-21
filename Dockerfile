@@ -9,7 +9,6 @@ RUN pwd
 COPY . .
 
 RUN gradle build || return 0
-COPY . .
 
 EXPOSE 8080
 ENTRYPOINT exec java -jar build/libs/redis-caching-java-0.0.1-SNAPSHOT.war
