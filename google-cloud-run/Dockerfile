@@ -1,28 +1,47 @@
-# Use an official Python image.
-# https://hub.docker.com/_/python
-FROM python:3.9
+## Use an official Python image.
+## https://hub.docker.com/_/python
+#FROM pierrevincent/gradle-java8
 
-WORKDIR /usr/src/app/
+#WORKDIR /usr/src/app/
 
-RUN pwd
+#RUN pwd
 
+#COPY . .
+
+
+## Copy local code to the container image.
+
+## Service must listen to $PORT environment variable.
+## This default value facilitates local development.
+
+
+## Setting this ensures print statements and log messages
+## promptly appear in Cloud Logging.
+
+
+#CMD exec python3 manage.py runserver 0.0.0.0:$PORT
+FROM gradle:5.3.0-jdk-alpine AS TEMP_BUILD_IMAGE
+ENV APP_HOME=/usr/app/
+WORKDIR $APP_HOME
+COPY build.gradle settings.gradle $APP_HOME
+
+COPY gradle $APP_HOME/gradle
+COPY --chown=gradle:gradle . /home/gradle/src
+USER root
+RUN chown -R gradle /home/gradle/src
+
+RUN gradle build || return 0
 COPY . .
+RUN gradle clean build
 
-RUN pip install -r google-cloud-run/requirements.txt
+# actual container
 
-# Copy local code to the container image.
+FROM adoptopenjdk/openjdk8:alpine
+ENV ARTIFACT_NAME=redis-caching-java-0.0.1-SNAPSHOT.war
+ENV APP_HOME=/usr/app/
 
-# Service must listen to $PORT environment variable.
-# This default value facilitates local development.
-ARG REDIS_URL_ADDRESS
+WORKDIR $APP_HOME
+COPY --from=TEMP_BUILD_IMAGE $APP_HOME/build/libs/$ARTIFACT_NAME .
 
-ENV REDIS_URL=$REDIS_URL_ADDRESS
-ENV PORT 8080
-
-# Setting this ensures print statements and log messages
-# promptly appear in Cloud Logging.
-ENV PYTHONUNBUFFERED TRUE
-
-RUN python3 manage.py collectstatic
-
-CMD exec python3 manage.py runserver 0.0.0.0:$PORT
+EXPOSE 8080
+ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
