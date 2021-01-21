@@ -20,7 +20,7 @@
 
 
 #CMD exec python3 manage.py runserver 0.0.0.0:$PORT
-FROM gradle:5.3.0-jdk-alpine AS TEMP_BUILD_IMAGE
+FROM gradle:6.7.0-jdk8 AS TEMP_BUILD_IMAGE
 
 WORKDIR /usr/src/app/
 
