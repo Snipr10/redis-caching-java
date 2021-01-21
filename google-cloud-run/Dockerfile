@@ -30,6 +30,9 @@ RUN echo $(ls)
 WORKDIR ..
 RUN echo $(ls)
 RUN gradle build --no-daemon
+
+RUN gradle run --no-daemon
+
 RUN echo $(ls)
 
 COPY  $APP_HOME/build/libs/*.war /app/spring-boot-application.war
