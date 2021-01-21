@@ -27,9 +27,12 @@ COPY . .
 
 USER root
 RUN echo $(ls)
-
+WORKDIR ..
+RUN echo $(ls)
 RUN gradle build --no-daemon
-COPY --from=TEMP_BUILD_IMAGE $APP_HOME/build/libs/*.war /app/spring-boot-application.war
+RUN echo $(ls)
+
+COPY  $APP_HOME/build/libs/*.war /app/spring-boot-application.war
 
 # actual container
 
