@@ -27,14 +27,16 @@ COPY . .
 
 USER root
 
-RUN gradle build || return 0
+RUN gradle build --no-daemon
 
 # actual container
 
 FROM adoptopenjdk/openjdk8:alpine
-ENV ARTIFACT_NAME=redis-caching-java-0.0.1-SNAPSHOT.war
-ENV APP_HOME=/usr/app/
 
-WORKDIR $APP_HOME
+EXPOSE 8080
 
-ENTRYPOINT exec java -jar build/libs/redis-caching-java-0.0.1-SNAPSHOT.war
+RUN mkdir /app
+
+COPY --from=build /home/gradle/src/build/libs/*.war /app/spring-boot-application.war
+
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.war"]
