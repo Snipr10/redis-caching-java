@@ -26,6 +26,7 @@ WORKDIR $APP_HOME
 COPY . .
 
 USER root
+RUN echo $(ls)
 
 RUN gradle build --no-daemon
 COPY --from=TEMP_BUILD_IMAGE $APP_HOME/build/libs/*.war /app/spring-boot-application.war
