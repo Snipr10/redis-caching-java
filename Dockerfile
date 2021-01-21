@@ -20,7 +20,7 @@
 
 
 #CMD exec python3 manage.py runserver 0.0.0.0:$PORT
-FROM gradle:6.8.0-jre11-openj9
+FROM gradle:6.8.0-jdk11-openj9
 
 WORKDIR /usr/src/app/
 
