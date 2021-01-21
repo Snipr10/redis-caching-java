@@ -28,7 +28,7 @@ Show how the redis works with Spring(java).
 Don't forget to add add-ons heroku redis  
 
 <p>
-    <a href="https://deploy.cloud.run" target="_blank">
+    <a href="https://deploy.cloud.run/?dir=google-cloud-run" target="_blank">
         <img src="https://deploy.cloud.run/button.svg" alt="Run on Google Cloud" width="200px"/>
     </a>
     (See notes: How to run on Google Cloud)
