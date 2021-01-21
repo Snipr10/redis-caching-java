@@ -25,7 +25,8 @@ ENV APP_HOME=/usr/app/
 WORKDIR $APP_HOME
 COPY . .
 
-USER root
+RUN echo $(ls)
+WORKDIR ..
 RUN echo $(ls)
 
 RUN gradle build --no-daemon
