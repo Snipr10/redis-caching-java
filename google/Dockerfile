@@ -21,15 +21,17 @@
 
 #CMD exec python3 manage.py runserver 0.0.0.0:$PORT
 FROM gradle:5.3.0-jdk-alpine AS TEMP_BUILD_IMAGE
-ENV APP_HOME=/usr/app/
-WORKDIR $APP_HOME
+
+WORKDIR /usr/src/app/
+
+RUN pwd
+
 COPY . .
 
+
 RUN echo $(ls)
-WORKDIR ..
 RUN echo $(ls)
 
-RUN gradle build --no-daemon
 RUN gradle build --no-daemon
 
 RUN echo $(ls)
