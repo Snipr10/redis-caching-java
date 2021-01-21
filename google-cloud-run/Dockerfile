@@ -23,7 +23,7 @@
 FROM gradle:5.3.0-jdk-alpine AS TEMP_BUILD_IMAGE
 ENV APP_HOME=/usr/app/
 WORKDIR $APP_HOME
-COPY build.gradle settings.gradle $APP_HOME
+COPY . .
 
 COPY gradle $APP_HOME/gradle
 COPY --chown=gradle:gradle . /home/gradle/src
