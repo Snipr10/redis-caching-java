@@ -28,7 +28,7 @@ COPY . .
 USER root
 
 RUN gradle build --no-daemon
-COPY --from=TEMP_BUILD_IMAGE $APP_HOME/build/libs/*.war /app/spring-boot-application.war
+RUN echo $(ls)
 
 
 # actual container
@@ -36,9 +36,5 @@ COPY --from=TEMP_BUILD_IMAGE $APP_HOME/build/libs/*.war /app/spring-boot-applica
 FROM adoptopenjdk/openjdk8:alpine
 
 EXPOSE 8080
-
-RUN mkdir /app
-
-COPY --from=build /usr/app/build/libs/*.war /app/spring-boot-application.war
-
-ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.war"]
+COPY ${JAR_FILE} app.war
+ENTRYPOINT ["java","-jar","/app.war"]

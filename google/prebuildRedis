@@ -3,4 +3,4 @@ set -euxo pipefail
 
 
 
-docker build -t ${IMAGE_URL} -f ${PARENT_PATH}/google-cloud-run/Dockerfile ${PARENT_PATH}
+docker build -t ${IMAGE_URL} --build-arg JAR_FILE=build/libs/\*.war -f ${PARENT_PATH}/google-cloud-run/Dockerfile ${PARENT_PATH}
