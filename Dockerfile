@@ -36,7 +36,7 @@ RUN gradle build --no-daemon
 
 RUN echo $(ls)
 
-#EXPOSE 8080
+EXPOSE 8080
 #COPY ${JAR_FILE} app.jar
 #ENTRYPOINT ["java","-jar","/app1.jar"]
 ENTRYPOINT ["java","-jar","build/libs/redis-caching-java-0.0.1-SNAPSHOT.jar"]
