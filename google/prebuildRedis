@@ -9,4 +9,4 @@ export PARENT_PATH=$(cd ../ && pwd)
 export REDIS_HOST=$(gcloud redis instances describe redisdb --region ${GOOGLE_CLOUD_REGION} --format "value(host)")
 export REDIS_PORT=$(gcloud redis instances describe redisdb --region ${GOOGLE_CLOUD_REGION} --format "value(port)")
 
-docker build -t ${IMAGE_URL} --build-arg JAR_FILE=build/libs/\*.jar -f ${PARENT_PATH}/google-cloud-run/Dockerfile ${PARENT_PATH}
+#docker build -t ${IMAGE_URL} --build-arg JAR_FILE=build/libs/\*.jar -f ${PARENT_PATH}/google-cloud-run/Dockerfile ${PARENT_PATH}
